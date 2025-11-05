@@ -1,8 +1,13 @@
 import React from 'react'
 
+import "./App.css"
+import Register from './Pages/Register.jsx'
+
 const App = () => {
   return (
-    <div>app</div>
+    <>
+      <Register></Register>
+    </>
   )
 }
 
