@@ -1,9 +1,35 @@
-import React from 'react'
+import { createSlice } from "@reduxjs/toolkit";
 
-const slice = () => {
-  return (
-    <div>slice</div>
-  )
+
+
+let intialstat={
+count:0,
+
 }
 
-export default slice
+
+export let counterSlice=createSlice({
+    name:"counter",
+    initialState:intialstat,
+    reducers:{
+        increment: (state) => {   
+          state.count +=1
+            },
+          decrement: (state) => {
+           state.count -=1
+         },
+         
+         
+    
+
+    },
+   
+     
+
+
+
+})
+export let {increment,decrement}=counterSlice.actions
+export default counterSlice.reducer
+
+
