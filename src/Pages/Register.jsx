@@ -22,12 +22,24 @@ const Register = () => {
 
   const validateForm = () => {
     const newErrors = {}
-    
-    if (!form.name.trim()) newErrors.name = 'Name is required'
+   const nameRegex = /^[A-Za-z]+$/;
+
+  if (!nameRegex.test(form.name)) {
+    console.log("❌ Invalid name");
+    newErrors.name='Name is Invalid'
+  } else {
+    console.log("✅ Valid name");
+  }
+
     if (!form.email) newErrors.email = 'Email is required'
-    else if (!/\S+@\S+\.\S+/.test(form.email)) newErrors.email = 'Email is invalid'
+    else if (!/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(form.email)) newErrors.email = 'Email is invalid'
     if (!form.password) newErrors.password = 'Password is required'
-    else if (form.password.length < 6) newErrors.password = 'Password must be at least 6 characters'
+    else if (!/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/.test(form.password)) newErrors.password = <ul>
+      <ol>at least one lowercase letter</ol>
+      <ol>at least one uppercase letter</ol>
+      <ul>at least one digit</ul>
+      <li>at least one special character</li>
+    </ul>
     if (form.password !== form.confirmPassword) newErrors.confirmPassword = 'Passwords do not match'
 
     setErrors(newErrors)
