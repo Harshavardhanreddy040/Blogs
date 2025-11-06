@@ -4,6 +4,7 @@ import { useDispatch } from 'react-redux'
 import { registerUser } from '../slice/slice'
 
 const Register = () => {
+  
   const [showPassword, setShowPassword] = useState(false)
   const dispatch=useDispatch()
   const [showConfirmPassword, setShowConfirmPassword] = useState(false)

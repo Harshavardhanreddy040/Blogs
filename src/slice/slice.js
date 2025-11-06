@@ -1,67 +1,16 @@
-// import { createSlice } from "@reduxjs/toolkit";
 
-
-
-// let intialstate={
-
-
-// }
-
-
-
-// export let counterSlice=createSlice({
-//     name:"counter",
-//     initialState:intialstate,
-//     reducers:{
-        
-         
-         
-    
-
-//     },
-   
-     
-
-
-
-// })
-// export let {increment,decrement}=counterSlice.actions
-// export default counterSlice.reducer
-
-
-// slice/slice.js
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
 // Mock API function - replace with real API
-const mockRegisterAPI = (userData) => {
-  return new Promise((resolve, reject) => {
-    setTimeout(() => {
-      console.log('API Received Data:', userData);
-      if (userData.email && userData.password) {
-        resolve({ 
-          success: true, 
-          message: 'User registered successfully',
-          user: { id: 1, ...userData }
-        });
-      } else {
-        reject(new Error('Registration failed'));
-      }
-    }, 2000);
-  });
-};
+
 
 // Async thunk for user registration
 export const registerUser = createAsyncThunk(
-  'auth/register',async (payLoad)=>{
+  'api/server/register',async (payLoad)=>{
        const response = await  axios.post("http://192.168.0.197:5000/api/users/register",payLoad)
        
-  }
-  
-    
-      
-      
-    
+  }       
 );
 
 const initialState = {
