@@ -28,7 +28,7 @@ const Register = () => {
     console.log("❌ Invalid name");
     newErrors.name='Name is Invalid'
   } else {
-    console.log("✅ Valid name");
+    console.log("✅ Valid nam");
   }
 
     if (!form.email) newErrors.email = 'Email is required'
