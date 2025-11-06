@@ -1,35 +1,114 @@
-import { createSlice } from "@reduxjs/toolkit";
+// import { createSlice } from "@reduxjs/toolkit";
 
 
 
-let intialstat={
-count:0,
-
-}
+// let intialstate={
 
 
-export let counterSlice=createSlice({
-    name:"counter",
-    initialState:intialstat,
-    reducers:{
-        increment: (state) => {   
-          state.count +=1
-            },
-          decrement: (state) => {
-           state.count -=1
-         },
+// }
+
+
+
+// export let counterSlice=createSlice({
+//     name:"counter",
+//     initialState:intialstate,
+//     reducers:{
+        
          
          
     
 
-    },
+//     },
    
      
 
 
 
-})
-export let {increment,decrement}=counterSlice.actions
-export default counterSlice.reducer
+// })
+// export let {increment,decrement}=counterSlice.actions
+// export default counterSlice.reducer
 
 
+// slice/slice.js
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import axios from "axios";
+
+// Mock API function - replace with real API
+const mockRegisterAPI = (userData) => {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      console.log('API Received Data:', userData);
+      if (userData.email && userData.password) {
+        resolve({ 
+          success: true, 
+          message: 'User registered successfully',
+          user: { id: 1, ...userData }
+        });
+      } else {
+        reject(new Error('Registration failed'));
+      }
+    }, 2000);
+  });
+};
+
+// Async thunk for user registration
+export const registerUser = createAsyncThunk(
+  'auth/register',async (payLoad)=>{
+       const response = await  axios.post("http://192.168.0.197:5000/api/users/register",payLoad)
+       
+  }
+  
+    
+      
+      
+    
+);
+
+const initialState = {
+  user: null,
+  loading: false,
+  error: null,
+  success: false
+};
+
+export const authSlice = createSlice({
+  name: "auth",
+  initialState: initialState,
+  reducers: {
+    // Simple reducer to log something
+    logMessage: (state, action) => {
+      console.log('Redux Log:', action.payload);
+    },
+    clearState: (state) => {
+      state.loading = false;
+      state.error = null;
+      state.success = false;
+      console.log('Redux: State cleared');
+    }
+  },
+  extraReducers: (builder) => {
+    builder
+      .addCase(registerUser.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+        state.success = false;
+        console.log('Redux: Registration pending...');
+      })
+      .addCase(registerUser.fulfilled, (state, action) => {
+        state.loading = false;
+        state.user = action.payload;
+        state.success = true;
+        state.error = null;
+        console.log('Redux: Registration fulfilled with:', action.payload);
+      })
+      .addCase(registerUser.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+        state.success = false;
+        console.log('Redux: Registration rejected with:', action.payload);
+      });
+  }
+});
+
+export const { logMessage, clearState } = authSlice.actions;
+export default authSlice.reducer;
