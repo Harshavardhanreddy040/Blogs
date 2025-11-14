@@ -8,6 +8,7 @@ import {
   FaEye,
   FaEyeSlash
 } from 'react-icons/fa';
+import { useNavigate } from 'react-router-dom';
 
 const EnhancedLogin = () => {
   const [formData, setFormData] = useState({
@@ -32,7 +33,7 @@ const EnhancedLogin = () => {
     }));
     setPositions(initialPositions);
   }, []);
-
+  const navigate  = useNavigate();
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData(prevState => ({
@@ -281,7 +282,7 @@ const EnhancedLogin = () => {
                   className="font-semibold text-white hover:text-blue-200 inline-flex items-center space-x-2 transition-all duration-300 group"
                 >
                   <FaUserPlus className="transform group-hover:scale-110 transition-transform duration-300" />
-                  <span className="border-b border-transparent group-hover:border-white/50 transition-all duration-300">
+                  <span className="border-b border-transparent group-hover:border-white/50 transition-all duration-300" onClick={()=>navigate("/")}>
                     Create your account
                   </span>
                 </a>

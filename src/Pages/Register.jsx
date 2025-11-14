@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { FaUser, FaEnvelope, FaLock, FaEye, FaEyeSlash, FaCamera } from "react-icons/fa"
 import { useDispatch } from 'react-redux'
 import { registerUser } from '../slice/slice'
+import {useNavigate } from 'react-router-dom'
 
 const Register = () => {
   
@@ -20,31 +21,36 @@ const Register = () => {
     if (errors[name]) setErrors(prev => ({ ...prev, [name]: '' }))
   }
 
-  const validateForm = () => {
-    const newErrors = {}
-   const nameRegex = /^[A-Za-z]+$/;
+        const navigate = useNavigate();
 
-  if (!nameRegex.test(form.name)) {
-    console.log("❌ Invalid name");
-    newErrors.name='Name is Invalid'
-  } else {
-    console.log("✅ Valid name");
-  }
+        const validateForm = () => {
+          const newErrors = {}
+        const nameRegex = /^[A-Za-z]+(?: [A-Za-z]+)*$/;
 
-    if (!form.email) newErrors.email = 'Email is required'
-    else if (!/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(form.email)) newErrors.email = 'Email is invalid'
-    if (!form.password) newErrors.password = 'Password is required'
-    else if (!/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/.test(form.password)) newErrors.password = <ul>
-      <ol>at least one lowercase letter</ol>
-      <ol>at least one uppercase letter</ol>
-      <ul>at least one digit</ul>
-      <li>at least one special character</li>
-    </ul>
-    if (form.password !== form.confirmPassword) newErrors.confirmPassword = 'Passwords do not match'
+        if (!nameRegex.test(form.name)) {
+          // console.log("❌ Invalid name");
+          newErrors.name='Name is Invalid'
+        } else {
+          console.log("✅ Valid name");
+        }
 
-    setErrors(newErrors)
-    return Object.keys(newErrors).length === 0
-  }
+        const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+        const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+        if (!form.email) newErrors.email = 'Email is required'
+        else if (!emailRegex.test(form.email)) newErrors.email = 'Email is invalid'
+
+        if (!form.password) newErrors.password = 'Password is required'
+        else if (!passwordRegex.test(form.password)) newErrors.password = <ul>
+          <ol>at least one lowercase letter</ol>
+          <ol>at least one uppercase letter</ol>
+          <ul>at least one digit</ul>
+          <li>at least one special character</li>
+        </ul>
+
+        if (form.password !== form.confirmPassword) newErrors.confirmPassword = 'Passwords do not match'
+        setErrors(newErrors)
+        return Object.keys(newErrors).length === 0
+      }
 
   const handleSubmit = (e) => {
     e.preventDefault()
@@ -128,7 +134,7 @@ const Register = () => {
 
           <div className="mt-4 text-center">
             <p className="text-gray-700 text-sm">
-              Already have an account? <button className="text-indigo-700 hover:underline font-semibold">Sign in here</button>
+              Already have an account? <button className="text-indigo-700 hover:underline font-semibold" onClick={()=> navigate("/login")}>Sign in here</button>
             </p>
           </div>
         </div>

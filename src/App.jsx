@@ -1,10 +1,10 @@
 import React from 'react'
 
 import "./App.css"
-import Register from './Pages/Register.jsx'
+// import Register from './Pages/Register.jsx'
 import { RouterProvider } from 'react-router-dom'
 import router from './routes/Route.jsx'
-import Login from './Pages/login.jsx'
+import Login from './Pages/Login.jsx'
 
 const App = () => {
   return (
