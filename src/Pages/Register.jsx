@@ -26,7 +26,7 @@ const Register = () => {
     const { name, value, files } = e.target;
     if (files && files[0]) {
       const imageFile = files[0];
-      setCropImage(URL.createObjectURL(imageFile)); // Open image in cropper
+      setCropImage(URL.createObjectURL(imageFile)); 
       setShowCropper(true);
     } else {
       setForm(prev => ({ ...prev, [name]: value }));
@@ -81,7 +81,7 @@ const Register = () => {
             Create Your Account
           </h2>
 
-          {/* Cropper Modal */}
+        
           {showCropper && (
             <div className="fixed inset-0 bg-black/70 flex items-center justify-center z-50">
               <div className="bg-white p-4 rounded-xl shadow-lg max-w-lg w-full">
@@ -119,7 +119,7 @@ const Register = () => {
               </div>
             </div>
 
-            {/* Name */}
+           
             <div className="relative">
               <FaUser className="absolute left-3 top-3 text-indigo-500" />
               <input
@@ -147,7 +147,7 @@ const Register = () => {
               {errors.email && <p className="text-red-500 text-xs mt-1">{errors.email}</p>}
             </div>
 
-            {/* Password */}
+        
             <div className="relative">
               <FaLock className="absolute left-3 top-3 text-indigo-500" />
               <input
