@@ -15,6 +15,28 @@ const Register = () => {
   const [errors, setErrors] = useState({})
 
   const handleChange = (e) => {
+
+    const { name, value, files } = e.target;
+    if (files && files[0]) {
+      const imageFile = files[0];
+      setCropImage(URL.createObjectURL(imageFile)); 
+      setShowCropper(true);
+    } else {
+      setForm(prev => ({ ...prev, [name]: value }));
+      if (errors[name]) setErrors(prev => ({ ...prev, [name]: '' }));
+    }
+  };
+
+  const handleCrop = (cropperRef) => {
+    if (cropperRef && cropperRef.getCanvas()) {
+      const canvas = cropperRef.getCanvas();
+      canvas.toBlob((blob) => {
+        if (blob) {
+          const croppedFile = new File([blob], 'cropped-profile.jpg', { type: 'image/jpeg' });
+          setForm(prev => ({ ...prev, profilePhoto: croppedFile }));
+          setCroppedImage(URL.createObjectURL(croppedFile));
+          setShowCropper(false);
+
     const { name, value, files } = e.target
     setForm(prev => ({ ...prev, [name]: files ? files[0] : value }))
     // Clear error when user types
@@ -32,6 +54,7 @@ const Register = () => {
           newErrors.name='Name is Invalid'
         } else {
           console.log("✅ Valid name");
+
         }
 
         const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
@@ -93,7 +116,7 @@ const Register = () => {
               </div>
             </div>
 
-            {/* Name */}
+           
             <div className="relative">
               <FaUser className="absolute left-3 top-3 text-indigo-500" />
               <input type="text" name="name" placeholder="Full Name" value={form.name} onChange={handleChange} className="w-full pl-9 pr-4 py-2.5 rounded-lg border border-gray-300 focus:ring-2 focus:ring-indigo-500 focus:outline-none text-gray-700 shadow-sm" />
@@ -107,7 +130,7 @@ const Register = () => {
               {errors.email && <p className="text-red-500 text-xs mt-1">{errors.email}</p>}
             </div>
 
-            {/* Password */}
+        
             <div className="relative">
               <FaLock className="absolute left-3 top-3 text-indigo-500" />
               <input type={showPassword ? "text" : "password"} name="password" placeholder="Password" value={form.password} onChange={handleChange} className="w-full pl-9 pr-10 py-2.5 rounded-lg border border-gray-300 focus:ring-2 focus:ring-indigo-500 focus:outline-none text-gray-700 shadow-sm" />
