@@ -8,6 +8,7 @@ import axios from "axios";
 // Async thunk for user registration
 export const registerUser = createAsyncThunk(
   'api/users/register',async (payLoad)=>{
+      //  const response = await  axios.post("http://192.168.0.197:5000/api/users/register",payLoad)
        const response = await  axios.post("http://192.168.0.21:5000/api/users/register",payLoad,
         {
           headers:{
@@ -15,9 +16,7 @@ export const registerUser = createAsyncThunk(
           }
         }
        )
-       
-       
-  }       
+  }
 );
 
 const initialState = {
